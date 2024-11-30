@@ -17,8 +17,12 @@ ext {
   junitVersion = '5.10.0'
 }
 
-sourceCompatibility = '20'
-targetCompatibility = '20'
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(19) // Ensure Java 19 compatibility
+    vendor = JvmVendorSpec.matching("Amazon Corretto") // Target Amazon Corretto
+  }
+}
 
 tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
@@ -30,12 +34,11 @@ application {
 }
 
 javafx {
-  version = '20.0.1'
+  version = '19.0.1'
   modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
-
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
   implementation 'com.mysql:mysql-connector-j:9.0.0'
